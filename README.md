@@ -1,2 +1,2 @@
 # ios-projects
-Basic iOS projects from tutorials I found online.
+Basic iOS projects based on tutorials I found online.
