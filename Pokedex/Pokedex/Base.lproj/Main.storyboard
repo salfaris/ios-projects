@@ -93,11 +93,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7c4-O4-nXm">
+                                <rect key="frame" x="183" y="539" width="52" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Catch"/>
+                                <connections>
+                                    <action selector="toggleCatch" destination="yFp-uv-eEo" eventType="touchUpInside" id="O2Z-2T-aYV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cVc-In-IFv"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <connections>
+                        <outlet property="catchButton" destination="7c4-O4-nXm" id="vTu-og-1PZ"/>
                         <outlet property="nameLabel" destination="Zti-lO-HCX" id="4yz-Df-XpM"/>
                         <outlet property="numberLabel" destination="Sja-25-iqf" id="cj5-fb-cuF"/>
                         <outlet property="type1Label" destination="pSm-0Z-rVe" id="OOi-5I-FB3"/>
