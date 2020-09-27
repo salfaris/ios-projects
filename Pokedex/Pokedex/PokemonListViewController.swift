@@ -1,7 +1,11 @@
 import UIKit
 
-class PokemonListViewController: UITableViewController {
+class PokemonListViewController: UITableViewController, UISearchBarDelegate {
+    @IBOutlet var searchBar: UISearchBar!
+    
     var pokemon: [PokemonListResult] = []
+    var filteredPokemon: [PokemonListResult] = []
+    var shouldShowSearchResults = false
     
     func capitalize(text: String) -> String {
         return text.prefix(1).uppercased() + text.dropFirst()
@@ -9,6 +13,8 @@ class PokemonListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        // filteredPokemon = pokemon
         
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=151") else {
             return
@@ -37,12 +43,24 @@ class PokemonListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemon.count
+        if shouldShowSearchResults {
+            return filteredPokemon.count
+        }
+        else {
+            return pokemon.count
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-        cell.textLabel?.text = capitalize(text: pokemon[indexPath.row].name)
+        if shouldShowSearchResults {
+            cell.textLabel?.text = capitalize(text: filteredPokemon[indexPath.row].name)
+        }
+        else {
+            cell.textLabel?.text = capitalize(text: pokemon[indexPath.row].name)
+        }
+        
         return cell
     }
     
@@ -50,7 +68,22 @@ class PokemonListViewController: UITableViewController {
         if segue.identifier == "ShowPokemonSegue",
                 let destination = segue.destination as? PokemonViewController,
                 let index = tableView.indexPathForSelectedRow?.row {
-            destination.url = pokemon[index].url
+            if shouldShowSearchResults {
+                destination.url = filteredPokemon[index].url
+            }
+            else {
+                destination.url = pokemon[index].url
+            }
+            
         }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        shouldShowSearchResults = true
+        filteredPokemon = searchText.isEmpty ? pokemon : pokemon.filter { (item: PokemonListResult) -> Bool in
+            return item.name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        
+        tableView.reloadData()
     }
 }
