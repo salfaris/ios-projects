@@ -2,6 +2,8 @@ import UIKit
 
 class PokemonViewController: UIViewController {
     var url: String!
+    var pokemonID: Int!
+    var caughtPokemons = [Int: Bool]()
 
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var numberLabel: UILabel!
@@ -20,7 +22,7 @@ class PokemonViewController: UIViewController {
         numberLabel.text = ""
         type1Label.text = ""
         type2Label.text = ""
-
+        
         loadPokemon()
     }
 
@@ -33,6 +35,9 @@ class PokemonViewController: UIViewController {
             do {
                 let result = try JSONDecoder().decode(PokemonResult.self, from: data)
                 DispatchQueue.main.async {
+                    // Allow usage of pokemon ID for elsewhere within this file
+                    self.pokemonID = result.id
+                    
                     self.navigationItem.title = self.capitalize(text: result.name)
                     self.nameLabel.text = self.capitalize(text: result.name)
                     self.numberLabel.text = String(format: "#%03d", result.id)
@@ -45,6 +50,8 @@ class PokemonViewController: UIViewController {
                             self.type2Label.text = typeEntry.type.name
                         }
                     }
+                    
+                    
                 }
             }
             catch let error {
@@ -53,9 +60,17 @@ class PokemonViewController: UIViewController {
         }.resume()
     }
     
+    // Method is called when catch button is clicked
     @IBAction func toggleCatch() {
-        print("ToggleCatch is toggleclicked!")
+        if caughtPokemons[pokemonID] != nil {
+            // Remove the id (button was showing Release)
+            caughtPokemons[pokemonID] = nil
+            catchButton.setTitle("Catch", for: .normal)
+        }
+        else {
+            // Add the id (button was showing Catch)
+            caughtPokemons[pokemonID] = true
+            catchButton.setTitle("Release", for: .normal)
+        }
     }
-    
-    
 }
