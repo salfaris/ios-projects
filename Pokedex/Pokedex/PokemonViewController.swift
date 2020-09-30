@@ -4,7 +4,12 @@ class PokemonViewController: UIViewController {
     var url: String!
     var pokemonID: Int!
     var caughtPokemons = [Int: Bool]()
-
+    let defaults = UserDefaults.standard
+    
+    struct Keys {
+        static let pokemonIsCaught = "pokemonIsCaught"
+    }
+    
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var numberLabel: UILabel!
     @IBOutlet var type1Label: UILabel!
@@ -65,12 +70,18 @@ class PokemonViewController: UIViewController {
         if caughtPokemons[pokemonID] != nil {
             // Remove the id (button was showing Release)
             caughtPokemons[pokemonID] = nil
+            saveCatchState(saveState: false)
             catchButton.setTitle("Catch", for: .normal)
         }
         else {
             // Add the id (button was showing Catch)
             caughtPokemons[pokemonID] = true
+            saveCatchState(saveState: true)
             catchButton.setTitle("Release", for: .normal)
         }
+    }
+    
+    func saveCatchState(saveState: Bool) {
+        defaults.set(saveState, forKey: Keys.pokemonIsCaught)
     }
 }
