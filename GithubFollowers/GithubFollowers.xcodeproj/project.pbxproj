@@ -13,6 +13,8 @@
 		3B8E097D25264ECC00B8DDFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B8E097B25264ECC00B8DDFD /* LaunchScreen.storyboard */; };
 		3BED4FDF2528837A0032F137 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4FDE2528837A0032F137 /* SearchVC.swift */; };
 		3BED4FE2252883B80032F137 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4FE1252883B80032F137 /* FavoritesListVC.swift */; };
+		3BED4FE625299F000032F137 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4FE525299F000032F137 /* GFButton.swift */; };
+		3BED4FE92529A6950032F137 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED4FE82529A6950032F137 /* GFTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		3B8E097E25264ECC00B8DDFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BED4FDE2528837A0032F137 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		3BED4FE1252883B80032F137 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
+		3BED4FE525299F000032F137 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
+		3BED4FE82529A6950032F137 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				3B8E097E25264ECC00B8DDFD /* Info.plist */,
 				3BED4FDE2528837A0032F137 /* SearchVC.swift */,
 				3BED4FE1252883B80032F137 /* FavoritesListVC.swift */,
+				3BED4FE525299F000032F137 /* GFButton.swift */,
+				3BED4FE82529A6950032F137 /* GFTextField.swift */,
 			);
 			path = GithubFollowers;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BED4FE92529A6950032F137 /* GFTextField.swift in Sources */,
 				3BED4FE2252883B80032F137 /* FavoritesListVC.swift in Sources */,
+				3BED4FE625299F000032F137 /* GFButton.swift in Sources */,
 				3BED4FDF2528837A0032F137 /* SearchVC.swift in Sources */,
 				3B8E097125264EC600B8DDFD /* AppDelegate.swift in Sources */,
 				3B8E097325264EC600B8DDFD /* SceneDelegate.swift in Sources */,
