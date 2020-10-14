@@ -3,7 +3,7 @@
 //  GithubFollowers
 //
 //  Created by Salman Faris on 03/10/2020.
-//
+//z
 
 import UIKit
 
@@ -13,6 +13,9 @@ class SearchVC: UIViewController {
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
     
+    var isUsernameEntered: Bool {
+        return !usernameTextField.text!.isEmpty
+    }
     
     // Called when view is loaded the first time
     override func viewDidLoad() {
@@ -21,13 +24,34 @@ class SearchVC: UIViewController {
         configureLogoImageView()
         configureTextField()
         configureCallToActionButton()
+        createDismissKeyboardTapGesture()
     }
     
     
     // Called everytime the view appears
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true  // Hide the navigation bar
+        navigationController?.setNavigationBarHidden(true, animated: true)  // Hide the navigation bar
+    }
+    
+    // DIsmiss the keyboard by tapping elsewhere.
+    func createDismissKeyboardTapGesture() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
+    
+    
+    // Passing the data to FollowerListVC.
+    @objc func pushFollowerListVC() {
+        guard isUsernameEntered else {
+            presentGFAlertOnMainThread(title: "Empty Username", message: "Please enter a username. We need to know who to look for 😅.", buttonTitle: "Ok")
+            return
+        }
+        
+        let followerListVC = FollowerListVC()
+        followerListVC.username = usernameTextField.text
+        followerListVC.title = usernameTextField.text
+        navigationController?.pushViewController(followerListVC, animated: true)  // Push this VC onto the stack
     }
     
     
@@ -52,6 +76,10 @@ class SearchVC: UIViewController {
         // Storyboard drag and drop
         view.addSubview(usernameTextField)
         
+        // Sets the delegate: Tells the ViewController to listen to usernameTextField
+        // "Hey listen to me" code
+        usernameTextField.delegate = self
+        
         NSLayoutConstraint.activate([
             usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),  // y-coord
             
@@ -67,6 +95,9 @@ class SearchVC: UIViewController {
     func configureCallToActionButton() {
         view.addSubview(callToActionButton)
         
+        // When callToActionButton button is tapped, call pushFollowerListVC
+        callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
             callToActionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
             callToActionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
@@ -75,3 +106,14 @@ class SearchVC: UIViewController {
         ])
     }
 }
+
+
+extension SearchVC: UITextFieldDelegate {
+    // The return key (on keyboard) listener (delegate)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        pushFollowerListVC()
+        return true
+    }
+}
+
+
