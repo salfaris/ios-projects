@@ -1,8 +1,8 @@
 //
-//  ErrorMessage.swift
+//  GFError.swift
 //  GithubFollowers
 //
-//  Created by Salman Faris on 10/10/2020.
+//  Created by Salman Faris on 16/10/2020.
 //
 
 import Foundation
