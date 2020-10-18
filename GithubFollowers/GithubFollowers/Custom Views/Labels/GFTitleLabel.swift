@@ -21,12 +21,11 @@ class GFTitleLabel: UILabel {
     }
     
     
-    // Custom initializer
-    init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    // Use `convenience` so that we don't have to call configure() in this init
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+        self.init(frame: .zero)  // Here we call our designated init (which calls configure())
         self.textAlignment = textAlignment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-        configure()
     }
     
     
