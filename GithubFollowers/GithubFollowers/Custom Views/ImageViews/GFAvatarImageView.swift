@@ -10,7 +10,8 @@ import UIKit
 class GFAvatarImageView: UIImageView {
     
     let cache = NetworkManager.shared.cache
-    let placeholderImage = UIImage(named: "avatar-placeholder")!  // We force unwrap because it is in our bundle.
+    let placeholderImage = Images.placeholder
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,5 +28,13 @@ class GFAvatarImageView: UIImageView {
         clipsToBounds = true
         image = placeholderImage
         translatesAutoresizingMaskIntoConstraints = false  // Use auto layout
+    }
+    
+    
+    func downloadImage(fromURL url: String) {
+        NetworkManager.shared.downloadImage(from: url) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async { self.image = image }
+        }
     }
 }

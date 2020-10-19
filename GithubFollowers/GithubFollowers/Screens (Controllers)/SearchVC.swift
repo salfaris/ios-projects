@@ -12,7 +12,6 @@ class SearchVC: UIViewController {
     let logoImageView = UIImageView()
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
-    var logoImageViewTopConstraint: NSLayoutConstraint!
     
     var isUsernameEntered: Bool {
         return !usernameTextField.text!.isEmpty
@@ -22,6 +21,10 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground  // White if white mode, black if dark mode.
+        
+        // Storyboard equivalent to grabbing UIImageView from library, drag and drop to ViewController
+        view.addSubviews(logoImageView, usernameTextField, callToActionButton)
+        
         configureLogoImageView()
         configureTextField()
         configureCallToActionButton()
@@ -58,19 +61,14 @@ class SearchVC: UIViewController {
     
     
     func configureLogoImageView() {
-        // Storyboard equivalent to grabbing UIImageView from library, drag and drop to ViewController
-        view.addSubview(logoImageView)
-        
         logoImageView.translatesAutoresizingMaskIntoConstraints = false  // Use auto layout
         logoImageView.image = Images.ghLogo
         
         let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
         
-        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant)  // y-coord
-        logoImageViewTopConstraint.isActive = true
-        
         // Rule of thumb: 4 constraints per object (height, width, x-coord, y-coord)
         NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant),  // y-coord
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),  // x-coord
             logoImageView.heightAnchor.constraint(equalToConstant: 200),  // Height
             logoImageView.widthAnchor.constraint(equalToConstant: 200)  // Width
@@ -79,9 +77,6 @@ class SearchVC: UIViewController {
     
     
     func configureTextField() {
-        // Storyboard drag and drop
-        view.addSubview(usernameTextField)
-        
         // Sets the delegate: Tells the ViewController to listen to usernameTextField
         // "Hey listen to me" code
         usernameTextField.delegate = self
@@ -99,8 +94,6 @@ class SearchVC: UIViewController {
     
     
     func configureCallToActionButton() {
-        view.addSubview(callToActionButton)
-        
         // When callToActionButton button is tapped, call pushFollowerListVC
         callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         

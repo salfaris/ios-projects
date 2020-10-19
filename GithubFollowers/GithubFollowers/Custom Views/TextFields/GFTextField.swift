@@ -22,10 +22,12 @@ class GFTextField: UITextField {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false  // Use auto layout
         
+        // Border
         layer.cornerRadius = 10
         layer.borderWidth = 2
         layer.borderColor = UIColor.systemGray4.cgColor
         
+        // Text
         textColor = .label  // Black in white mode, White in dark mode
         tintColor = .label  // Color of blinking cursor
         textAlignment = .center
@@ -33,6 +35,7 @@ class GFTextField: UITextField {
         adjustsFontSizeToFitWidth = true
         minimumFontSize = 12
         
+        // Misc.
         backgroundColor = .tertiarySystemBackground
         autocorrectionType = .no  // Turn autocorrect off
         returnKeyType = .go
