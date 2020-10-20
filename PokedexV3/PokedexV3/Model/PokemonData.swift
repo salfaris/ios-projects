@@ -11,6 +11,7 @@ typealias pngUrl = String
 
 struct Pokemon: Codable {
     let name: String
+    let id: Int
     let sprites: PokemonSprite
 }
 

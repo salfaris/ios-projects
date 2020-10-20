@@ -18,15 +18,14 @@ class PokemonListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchPokemonResult()
         configureLayoutUI()
         configureTableView()
         
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchPokemonResult()
     }
     
 
@@ -45,7 +44,7 @@ class PokemonListVC: UIViewController {
     
     
     func configureLayoutUI() {
-        title = "Pòkedex"
+        title = "Wild Pòkedex"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -77,5 +76,12 @@ extension PokemonListVC: UITableViewDelegate, UITableViewDataSource {
         cell.set(pokemon: pokemon)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pokemon = pokemons[indexPath.row]
+        let destVC = PokemonDisplayVC(pokemon: pokemon)
+        
+        navigationController?.pushViewController(destVC, animated: true)
     }
 }
