@@ -13,6 +13,7 @@ class PokemonDisplayVC: UIViewController {
     var pokemonImageView = PokemonImageView(frame: .zero)
     var pokemonLabel = UILabel()
     var pokemonID = UILabel()
+    var pokemonWeight = UILabel()
     
     var pokemon: Pokemon!
     
@@ -42,6 +43,8 @@ class PokemonDisplayVC: UIViewController {
         pokemonImageView.downloadSprite(fromURL: pokemon.sprites.frontDefault)
         
         pokemonID.text = String(format: "#%03d", pokemon.id)
+        
+        pokemonWeight.text = "\(pokemon.weight) grams"
     }
     
     
@@ -58,6 +61,7 @@ class PokemonDisplayVC: UIViewController {
         stackView.addArrangedSubview(pokemonImageView)
         stackView.addArrangedSubview(pokemonLabel)
         stackView.addArrangedSubview(pokemonID)
+        stackView.addArrangedSubview(pokemonWeight)
     }
     
     func layoutUI() {

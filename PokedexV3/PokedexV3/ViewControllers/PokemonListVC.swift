@@ -21,7 +21,6 @@ class PokemonListVC: UIViewController {
         fetchPokemonResult()
         configureLayoutUI()
         configureTableView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
