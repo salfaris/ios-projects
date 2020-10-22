@@ -11,6 +11,8 @@ class PokemonListVC: UIViewController {
     
     var tableView = UITableView()
     var pokemons: [Pokemon] = []
+    var filteredPokemons: [Pokemon] = []
+    var isSearching = false
     
     struct Cells {
         static let pokemonCell = "PokemonCell"
@@ -19,6 +21,7 @@ class PokemonListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPokemonResult()
+        configureSearchController()
         configureLayoutUI()
         configureTableView()
     }
@@ -48,6 +51,15 @@ class PokemonListVC: UIViewController {
     }
     
     
+    func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a Pòkemon"
+        navigationItem.searchController = searchController
+    }
+    
+    
     func configureTableView() {
         view.addSubview(tableView)
         setTableViewDelegates()
@@ -66,21 +78,44 @@ class PokemonListVC: UIViewController {
 
 extension PokemonListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemons.count
+        if isSearching {
+            return filteredPokemons.count
+        }
+        else {
+            return pokemons.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.pokemonCell) as! PokemonCell
-        let pokemon = pokemons[indexPath.row]
-        cell.set(pokemon: pokemon)
         
+        let pokemon = isSearching ? filteredPokemons[indexPath.row] : pokemons[indexPath.row]
+        cell.set(pokemon: pokemon)
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let pokemon = pokemons[indexPath.row]
+        let pokemon = isSearching ? filteredPokemons[indexPath.row] : pokemons[indexPath.row]
         let destVC = PokemonDisplayVC(pokemon: pokemon)
         
         navigationController?.pushViewController(destVC, animated: true)
+    }
+}
+
+
+extension PokemonListVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        isSearching = true
+        filteredPokemons = pokemons.filter { $0.name.lowercased().contains(filter.lowercased()) }
+        
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        
+        tableView.reloadData()
     }
 }

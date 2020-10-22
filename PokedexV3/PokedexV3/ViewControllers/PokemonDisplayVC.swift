@@ -34,7 +34,6 @@ class PokemonDisplayVC: UIViewController {
         configureStackView()
     }
     
-    
     func configureUIElements() {
         title = pokemon.name.capitalized
         pokemonLabel.text = pokemon.name.capitalized
@@ -46,8 +45,7 @@ class PokemonDisplayVC: UIViewController {
         
         pokemonWeight.text = "\(pokemon.weight) grams"
     }
-    
-    
+     
     func configureBackgroundView() {
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 18
