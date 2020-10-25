@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     let context = CIContext()  // for Core Image
     var originalImage: UIImage?
+    var filteredImage: UIImage?
     
     @IBOutlet var imageView: UIImageView!
     
@@ -22,6 +23,12 @@ class ViewController: UIViewController {
         picker.delegate = self
         picker.sourceType = .photoLibrary
         navigationController?.present(picker, animated: true)
+    }
+    
+    
+    @IBAction func savePhoto() {
+        guard let image = filteredImage else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(savedImage), nil)
     }
     
     
@@ -45,6 +52,15 @@ class ViewController: UIViewController {
     }
     
     
+    @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
+        if let error = error {
+            print(error)
+            return
+        }
+        print("No errors when saving image.")
+    }
+    
+    
     func displayInImageView(with filter: CIFilter) {
         guard let originalImage = originalImage else { return }
         filter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
@@ -53,6 +69,7 @@ class ViewController: UIViewController {
         guard let output = filter.outputImage else { return }
         guard let imageToCg = self.context.createCGImage(output, from: output.extent) else { return }
         imageView.image = UIImage(cgImage: imageToCg)
+        filteredImage = UIImage(cgImage: imageToCg)
     }
 }
 
